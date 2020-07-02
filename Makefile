@@ -5,15 +5,15 @@
 ### EDIT THESE PATHS FOR YOUR OWN SETUP ###
 ###########################################
 
-SMSDK = ../..
-HL2SDK_ORIG = ../../../hl2sdk
-HL2SDK_OB = ../../../hl2sdk-ob
-HL2SDK_CSS = ../../../hl2sdk-css
-HL2SDK_OB_VALVE = ../../../hl2sdk-ob-valve
-HL2SDK_L4D = ../../../hl2sdk-l4d
-HL2SDK_L4D2 = ../../../hl2sdk-l4d2
-HL2SDK_CSGO = ../../../hl2sdk-csgo
-MMSOURCE19 = ../../../mmsource-1.10
+SMSDK = ../cpp/sourcemod
+HL2SDK_ORIG = ../cpp/hl2sdk
+HL2SDK_OB = ../cpp/hl2sdk-ob
+HL2SDK_CSS = ../cpp/hl2sdk-css
+HL2SDK_OB_VALVE = ../cpp/hl2sdk-ob-valve
+HL2SDK_L4D = ../cpp/hl2sdk-l4d
+HL2SDK_L4D2 = ../cpp/hl2sdk-l4d2
+HL2SDK_CSGO = ../cpp/hl2sdk-csgo
+MMSOURCE19 = ../cpp/metamod-source
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -34,7 +34,7 @@ C_OPT_FLAGS = -DNDEBUG -O3 -funroll-loops -pipe -fno-strict-aliasing
 C_DEBUG_FLAGS = -D_DEBUG -DDEBUG -g -ggdb3
 C_GCC4_FLAGS = -fvisibility=hidden
 CPP_GCC4_FLAGS = -fvisibility-inlines-hidden
-CPP = gcc
+CPP = gcc-4.9
 CPP_OSX = clang
 
 ##########################
@@ -110,18 +110,18 @@ else
 endif
 
 # if ENGINE is original or OB
-ifneq (,$(filter original orangebox,$(ENGINE)))
+ifneq (,$(filter original orangebox, $(ENGINE)))
 	LIB_SUFFIX = _i486.$(LIB_EXT)
 else
 	LIB_PREFIX = lib
-	ifneq (,$(filter orangeboxvalve,$(ENGINE)))
-		LIB_SUFFIX = _srv.$(LIB_EXT)
+	ifneq (,$(filter orangeboxvalve left4dead2, $(ENGINE)))
+		LIB_SUFFIX = _srv.$(LIB_EXT) 
 	else
-		LIB_SUFFIX = .$(LIB_EXT)
+		LIB_SUFFIX = .$(LIB_EXT) 
 	endif
 endif
 
-INCLUDE += -I. -I.. -Isdk -I$(SMSDK)/public -I$(SMSDK)/public/sourcepawn
+INCLUDE += -I. -I.. -Isdk -I$(SMSDK)/public -I$(SMSDK)/sourcepawn/include -I$(SMSDK)/public/sourcepawn
 
 ifeq "$(USEMETA)" "true"
 	LINK_HL2 = $(HL2LIB)/tier1_i486.a $(LIB_PREFIX)vstdlib$(LIB_SUFFIX) $(LIB_PREFIX)tier0$(LIB_SUFFIX)
@@ -143,7 +143,7 @@ LINK += -m32 -lm -ldl
 CFLAGS += -DPOSIX -Dstricmp=strcasecmp -D_stricmp=strcasecmp -D_strnicmp=strncasecmp -Dstrnicmp=strncasecmp \
 	-D_snprintf=snprintf -D_vsnprintf=vsnprintf -D_alloca=alloca -Dstrcmpi=strcasecmp -DCOMPILER_GCC -Wall \
 	-Wno-overloaded-virtual -Wno-switch -Wno-unused -msse -DSOURCEMOD_BUILD -DHAVE_STDINT_H -m32
-CPPFLAGS += -Wno-non-virtual-dtor -fno-exceptions -fno-rtti
+CPPFLAGS += -Wno-non-virtual-dtor -fno-exceptions -fno-rtti -std=c++11 -fpermissive
 
 ################################################
 ### DO NOT EDIT BELOW HERE FOR MOST PROJECTS ###
@@ -217,7 +217,7 @@ $(BIN_DIR)/%.o: %.cpp
 
 all: check
 	mkdir -p $(BIN_DIR)
-	ln -sf ../smsdk_ext.cpp
+	ln -sf $(SMSDK)/public/smsdk_ext.cpp
 	if [ "$(USEMETA)" = "true" ]; then \
 		ln -sf $(HL2LIB)/$(LIB_PREFIX)vstdlib$(LIB_SUFFIX); \
 		ln -sf $(HL2LIB)/$(LIB_PREFIX)tier0$(LIB_SUFFIX); \
