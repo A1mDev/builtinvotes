@@ -1,3 +1,7 @@
+Fix server crash
+==============
+Fix server crash when unloading plugin or destroy vote handle during voting
+
 BuiltinVotes by Powerlord
 ==============
 BuiltinVotes is a SourceMod Extension that lets plugins use the L4D/L4D2/TF2 built-in vote screens.
