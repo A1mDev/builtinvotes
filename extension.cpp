@@ -144,13 +144,15 @@ void BuiltinVoteManager::OnCoreMapStart(edict_t *pEdictList, int edictCount, int
 
 void BuiltinVoteManager::OnHandleDestroy(HandleType_t type, void *object)
 {
-	if (type == m_VoteType)
-	{
+	if (type == m_VoteType) {
+		if (IsVoteInProgress()) {
+			CancelVoting();
+			META_CONPRINT("[BuiltinVotes] Vote handle destroyed - vote cancel!\n");
+		}
+
 		IBaseBuiltinVote *vote = (IBaseBuiltinVote *)object;
 		vote->Destroy(false);
-	}
-	else if (type == m_StyleType)
-	{
+	} else if (type == m_StyleType) {
 		/* Do nothing */
 	}
 }
