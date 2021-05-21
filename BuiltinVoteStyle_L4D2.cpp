@@ -187,7 +187,9 @@ bool CL4D2BuiltinVote::Display(int clients[], unsigned int num_clients)
 		bf->WriteString("");
 	}
 	usermsgs->EndMessage();
-
+	
+	m_bResultDisplayed = false;
+	
 	SH_ADD_HOOK(IServerGameClients, ClientCommand, servergameclients, SH_MEMBER(this, &CL4D2BuiltinVote::OnClientCommand), false);
 
 	return true;
