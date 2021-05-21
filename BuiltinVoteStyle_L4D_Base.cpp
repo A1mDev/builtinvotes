@@ -60,21 +60,15 @@ void CL4DBaseBuiltinVote::OnClientCommand(edict_t *pEntity, const CCommand &cmd)
 	int client = gamehelpers->IndexOfEdict(pEntity);
 	const char *cmdname = cmd.Arg(0);
 
-	if (strcmp(cmdname, "Vote") == 0)
-	{
+	if (strcmp(cmdname, "Vote") == 0) {
 		const char *voteString = cmd.Arg(1);
-		int key_press;
-
-		if (strcmp(voteString, "Yes") == 0)
-		{
-			key_press = BUILTINVOTES_VOTE_YES;
-		} else {
-			key_press = BUILTINVOTES_VOTE_NO;
-		}
+		int key_press = (strcmp(voteString, "Yes") == 0) ? BUILTINVOTES_VOTE_YES : BUILTINVOTES_VOTE_NO;
 
 		s_VoteHandler.OnVoteSelect(this, client, key_press);
 		//ClientPressedKey(client, key_press);
 
 		RETURN_META(MRES_SUPERCEDE);
 	}
+	
+	RETURN_META(MRES_IGNORED);
 }
