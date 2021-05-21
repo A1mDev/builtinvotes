@@ -466,6 +466,7 @@ void BuiltinVoteHandler::EndVoting()
 	if (m_displayTimer)
 	{
 		timersys->KillTimer(m_displayTimer);
+		m_displayTimer = NULL;
 	}
 
 	if (m_bCancelled)
