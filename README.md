@@ -1,6 +1,7 @@
 Fix server crash
 ==============
-Fix server crash when unloading plugin or destroy vote handle during voting
+1) Fix: server crash when unloading plugin or destroy vote handle during voting
+2) Fix: if you unload the plugin during a vote and reload the map, then when the next vote is called, the server will crash. It seems SH_REMOVE_HOOK is not happening, and the function 'CL4DBaseBuiltinVote::OnClientCommand' returns the address of the old object, which has already been destroyed!
 
 BuiltinVotes by Powerlord
 ==============
