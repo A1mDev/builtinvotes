@@ -5,15 +5,15 @@
 ### EDIT THESE PATHS FOR YOUR OWN SETUP ###
 ###########################################
 
-SMSDK = ../cpp/sourcemod
-HL2SDK_ORIG = ../cpp/hl2sdk
-HL2SDK_OB = ../cpp/hl2sdk-ob
-HL2SDK_CSS = ../cpp/hl2sdk-css
-HL2SDK_OB_VALVE = ../cpp/hl2sdk-ob-valve
-HL2SDK_L4D = ../cpp/hl2sdk-l4d
-HL2SDK_L4D2 = ../cpp/hl2sdk-l4d2
-HL2SDK_CSGO = ../cpp/hl2sdk-csgo
-MMSOURCE19 = ../cpp/metamod-source
+SMSDK = ../sourcemod
+HL2SDK_ORIG = ../hl2sdk
+HL2SDK_OB = ../hl2sdk-ob
+HL2SDK_CSS = ../hl2sdk-css
+HL2SDK_OB_VALVE = ../hl2sdk-ob-valve
+HL2SDK_L4D = ../hl2sdk-l4d
+HL2SDK_L4D2 = ../hl2sdk-l4d2
+HL2SDK_CSGO = ../hl2sdk-csgo
+MMSOURCE19 = ../metamod-source
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -34,7 +34,7 @@ C_OPT_FLAGS = -DNDEBUG -O3 -funroll-loops -pipe -fno-strict-aliasing
 C_DEBUG_FLAGS = -D_DEBUG -DDEBUG -g -ggdb3
 C_GCC4_FLAGS = -fvisibility=hidden
 CPP_GCC4_FLAGS = -fvisibility-inlines-hidden
-CPP = gcc-4.9
+CPP = gcc
 CPP_OSX = clang
 
 ##########################
