@@ -30,6 +30,7 @@
  */
 
 #include "natives.h"
+#include "CVoteController.h"
 
 VoteNativeHelpers g_VoteHelpers;
 EmptyBuiltinVoteHandler s_EmptyBuiltinVoteHandler;
@@ -496,12 +497,10 @@ cell_t GetBuiltinVoteArgument(IPluginContext *pContext, const cell_t *params)
 	return (cell_t)written;
 }
 
-
 cell_t IsBuiltinVoteInProgress(IPluginContext *pContext, const cell_t *params)
 {
-	return g_BuiltinVotes.IsVoteInProgress() ? 1 : 0;
+	return (g_BuiltinVotes.IsVoteInProgress() || CVoteController::Game_IsVoteInProgress()) ? 1 : 0;
 }
-
 
 /*
 cell_t GetBuiltinVoteStyle(IPluginContext *pContext, const cell_t *params)
@@ -804,4 +803,14 @@ cell_t DisplayBuiltinVoteFail(IPluginContext *pContext, const cell_t *params)
 	vote->DisplayVoteFail(reason);
 
 	return 1;
+}
+
+cell_t Game_IsVoteInProgress(IPluginContext *pContext, const cell_t *params)
+{
+	return (CVoteController::Game_IsVoteInProgress()) ? 1 : 0;
+}
+
+cell_t BuiltinVote_IsVoteInProgress(IPluginContext *pContext, const cell_t *params)
+{
+	return (g_BuiltinVotes.IsVoteInProgress()) ? 1 : 0;
 }

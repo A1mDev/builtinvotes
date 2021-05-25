@@ -14,6 +14,7 @@ HL2SDK_L4D = ../hl2sdk-l4d
 HL2SDK_L4D2 = ../hl2sdk-l4d2
 HL2SDK_CSGO = ../hl2sdk-csgo
 MMSOURCE19 = ../metamod-source
+SOURCEMOD_BUILD ?= 1.10
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -24,7 +25,8 @@ PROJECT = builtinvotes
 #Uncomment for Metamod: Source enabled extension
 USEMETA = true
 
-OBJECTS = smsdk_ext.cpp extension.cpp BuiltinVoteHandler.cpp BuiltinVoteStyle_Base.cpp natives.cpp sm_memtable.cpp
+OBJECTS = smsdk_ext.cpp extension.cpp BuiltinVoteHandler.cpp BuiltinVoteStyle_Base.cpp \
+				natives.cpp sm_memtable.cpp util.cpp CVoteController.cpp 
 
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###
@@ -121,8 +123,12 @@ else
 	endif
 endif
 
-INCLUDE += -I. -I.. -Isdk -I$(SMSDK)/public -I$(SMSDK)/sourcepawn/include -I$(SMSDK)/public/sourcepawn
+INCLUDE += -I. -I.. -Isdk -I$(SMSDK)/public -I$(HL2PUB)/toolframework -I$(SMSDK)/sourcepawn/include -I$(SMSDK)/public/sourcepawn 
 
+ifeq "$(SOURCEMOD_BUILD)" "1.10"
+	INCLUDE += -I$(SMSDK)/public/amtl -I$(SMSDK)/public/amtl/amtl
+	
+endif
 ifeq "$(USEMETA)" "true"
 	LINK_HL2 = $(HL2LIB)/tier1_i486.a $(LIB_PREFIX)vstdlib$(LIB_SUFFIX) $(LIB_PREFIX)tier0$(LIB_SUFFIX)
 	ifeq "$(ENGINE)" "csgo"
@@ -143,7 +149,13 @@ LINK += -m32 -lm -ldl
 CFLAGS += -DPOSIX -Dstricmp=strcasecmp -D_stricmp=strcasecmp -D_strnicmp=strncasecmp -Dstrnicmp=strncasecmp \
 	-D_snprintf=snprintf -D_vsnprintf=vsnprintf -D_alloca=alloca -Dstrcmpi=strcasecmp -DCOMPILER_GCC -Wall \
 	-Wno-overloaded-virtual -Wno-switch -Wno-unused -msse -DSOURCEMOD_BUILD -DHAVE_STDINT_H -m32
-CPPFLAGS += -Wno-non-virtual-dtor -fno-exceptions -fno-rtti -std=c++11 -fpermissive
+CPPFLAGS += -Wno-non-virtual-dtor -fno-exceptions -fno-rtti -fpermissive
+
+ifeq "$(SOURCEMOD_BUILD)" "1.10"
+	CPPFLAGS += -std=c++14
+else
+	CPPFLAGS += -std=c++11
+endif
 
 ################################################
 ### DO NOT EDIT BELOW HERE FOR MOST PROJECTS ###

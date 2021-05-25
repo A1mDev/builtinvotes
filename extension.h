@@ -38,11 +38,15 @@
  */
 
 #include "smsdk_ext.h"
+#include <itoolentity.h>
+#include <IGameHelpers.h>
 #include <IBuiltinVoteManager.h>
 #include <BuiltinVoteHandler.h>
 #include "igameevents.h"
 #include "natives.h"
 #include "icvar.h"
+#include "util.h"
+#include "CVoteController.h"
 
 /**
  * @brief Sample implementation of the SDK Extension.
@@ -134,7 +138,12 @@ public:
 	 * @param clientMax		Maximum number of clients allowed in the server.
 	 */
 	virtual void OnCoreMapStart(edict_t *pEdictList, int edictCount, int clientMax);
-
+	
+	/**
+	 * @brief Called on level shutdown
+	 *
+	 */
+	virtual void OnCoreMapEnd();
 #endif
 
 public:  // IConCommandBaseAccessor
@@ -182,5 +191,7 @@ extern CGlobalVars *gpGlobals;
 extern BuiltinVoteHandler s_VoteHandler;
 //extern IBuiltinVoteStyle *m_VoteStyle;
 extern ICvar *icvar;
+extern IServerTools *servertools;
+extern IServerGameEnts *gameents;
 
 #endif //_INCLUDE_SOURCEMOD_EXTENSION_PROPER_H_
