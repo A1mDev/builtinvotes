@@ -1,7 +1,9 @@
-Fix server crash
+Last updates:
 ==============
-1) Fix: server crash when unloading plugin or destroy vote handle during voting
-2) Fix: if you unload the plugin during a vote and reload the map, then when the next vote is called, the server will crash. It seems SH_REMOVE_HOOK is not happening, and the function 'CL4DBaseBuiltinVote::OnClientCommand' returns the address of the old object, which has already been destroyed!
+1) Fix crash: server crash when unloading plugin or destroy vote handle during voting
+2) Fix crash: if you unload the plugin during a vote and reload the map, then when the next vote is called, the server will crash. It seems SH_REMOVE_HOOK is not happening, and the function 'CL4DBaseBuiltinVote::OnClientCommand' returns the address of the old object, which has already been destroyed!
+3) Add Natives: Game_IsVoteInProgress() and BuiltinVote_IsVoteInProgress(). 
+4) Fix native IsBuiltinVoteInProgress(), also checks if the game voting is in progress at the moment. This blocks double voting without plugin updates (Block if the game vote is already in progress).
 
 BuiltinVotes by Powerlord
 ==============
@@ -12,7 +14,7 @@ Build instructions
 First clone the repository to your SourceMod SDK's public directory:
 
         cd sourcemod/public
-        git clone https://github.com/mvandorp/builtinvotes.git
+        git clone https://github.com/A1mDev/builtinvotes.git
 
 Then run *make* to build the project:
 
