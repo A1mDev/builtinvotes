@@ -805,12 +805,17 @@ cell_t DisplayBuiltinVoteFail(IPluginContext *pContext, const cell_t *params)
 	return 1;
 }
 
+cell_t BuiltinVote_IsVoteInProgress(IPluginContext *pContext, const cell_t *params)
+{
+	return (g_BuiltinVotes.IsVoteInProgress()) ? 1 : 0;
+}
+
 cell_t Game_IsVoteInProgress(IPluginContext *pContext, const cell_t *params)
 {
 	return (CVoteController::Game_IsVoteInProgress()) ? 1 : 0;
 }
 
-cell_t BuiltinVote_IsVoteInProgress(IPluginContext *pContext, const cell_t *params)
+cell_t Game_GetVoteTeam(IPluginContext *pContext, const cell_t *params)
 {
-	return (g_BuiltinVotes.IsVoteInProgress()) ? 1 : 0;
+	return CVoteController::Game_GetVoteTeam();
 }

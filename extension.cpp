@@ -81,7 +81,7 @@ bool BuiltinVoteManager::SDK_OnMetamodLoad(ISmmAPI *ismm, char *error, size_t ma
 
 bool BuiltinVoteManager::SDK_OnLoad(char *error, size_t maxlength, bool late)
 {
-	if (!CVoteController::InitOffsets(error, maxlength)) {
+	if (!CVoteController::GetVoteControllerOffsets(error, maxlength)) {
 		return false;
 	}
 	
@@ -123,7 +123,7 @@ bool BuiltinVoteManager::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	
 	if (late) {
 		//Find a vote_controller
-		CVoteController::InitVoteController();
+		CVoteController::FindVoteController();
 	}
 	
 	return true;
@@ -155,7 +155,7 @@ void BuiltinVoteManager::OnCoreMapStart(edict_t *pEdictList, int edictCount, int
 	s_VoteHandler.OnMapStart();
 	
 	//Find the created vote_controller
-	CVoteController::InitVoteController();
+	CVoteController::FindVoteController();
 }
 
 void BuiltinVoteManager::OnHandleDestroy(HandleType_t type, void *object)

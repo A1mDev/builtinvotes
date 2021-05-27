@@ -35,16 +35,55 @@
 class CVoteController
 {
 public:
-	static bool InitOffsets(char* error, size_t maxlength);
+	/*	
+	* @brief		Get the desired offset to work with the vote_controller
+	*
+	* @return		true if managed to get an offset, false otherwise
+	*/
+	static bool GetVoteControllerOffsets(char* error, size_t maxlength);
 	
-	static void InitVoteController();
+	/*	
+	* @brief		Lookup for a vote_controller by class name, and save its CBaseHandle.
+	*
+	* @return		pointer to vote_controller, or NULL if not found
+	*/
+	static CVoteController* FindVoteController();
 	
+	/*	
+	* @brief		Returns the already found pointer to vote_controller, or trying to lookup it again
+	*
+	* @returns		pointer to vote_controller, or NULL
+	*/
+	static CVoteController* GetVoteController();
+	
+	/*	
+	* @brief		Check if there is a game vote in progress
+	*
+	* @returns		true if game vote in progress, false otherwise
+	*/
 	static bool Game_IsVoteInProgress();
 	
+#if SOURCE_ENGINE == SE_LEFT4DEAD2	
+	/*	
+	* @brief		Returns the number of the team in which the vote is progress
+	* @remarks		Team number: 1 - spectators, 2 - survivors, 3 - infected
+	* @remarks		It hardly works for a team of spectators
+	*
+	* @returns		-1 if no vote in progress or vote is for everyone, 
+	*					otherwise the command number
+	*/
+	// L4D2 only.
+	static int Game_GetVoteTeam();
+#endif
+
 private:
 	static CBaseHandle s_hVoteController;
 	
 	static int offset_m_activeIssueIndex;
+	
+#if SOURCE_ENGINE == SE_LEFT4DEAD2
+	static int offset_m_onlyTeamToVote;
+#endif
 };
 
 #endif //_INCLUDE_BUILTINVOTES_CVOTECONTROLLER_H_
