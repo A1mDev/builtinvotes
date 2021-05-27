@@ -625,16 +625,14 @@ stock bool DisplayBuiltinVoteToAllButOne(Handle vote, int client, int time)
  */
 stock bool DisplayBuiltinVoteToTeamButOne(Handle vote, int client, int time)
 {
-	if (!IsClientInGame(client))
-	{
+	if (!IsClientInGame(client)) {
 		return false;
 	}
 
 	int team = GetClientTeam(client);
 
 #if 0
-	if (team < 2)
-	{
+	if (team < 2) {
 		return false;
 	}
 #endif
