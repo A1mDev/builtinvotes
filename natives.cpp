@@ -817,5 +817,9 @@ cell_t Game_IsVoteInProgress(IPluginContext *pContext, const cell_t *params)
 
 cell_t Game_GetVoteTeam(IPluginContext *pContext, const cell_t *params)
 {
+#if SOURCE_ENGINE == SE_LEFT4DEAD2
 	return CVoteController::Game_GetVoteTeam();
+#else
+	return pContext->ThrowNativeError("This native is only available for left4dead2");
+#endif
 }
