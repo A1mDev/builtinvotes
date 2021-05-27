@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Builtin Votes
- * Copyright (C) 2011 Ross Bemrose (Powerlord).  All rights reserved.
+ * Copyright (C) 2021 A1m` (A1mDev).  All rights reserved.
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -32,8 +32,11 @@
 #include "extension.h"
 #include "CVoteController.h"
 
-CBaseEntity* CVoteController::pEntity = nullptr;
+#define INVALID_ISSUE			-1
+
 int CVoteController::offset_m_activeIssueIndex = 0;
+
+CBaseHandle CVoteController::s_hVoteController;
 
 bool CVoteController::InitOffsets(char* error, size_t maxlength)
 {
@@ -51,27 +54,34 @@ bool CVoteController::InitOffsets(char* error, size_t maxlength)
 
 void CVoteController::InitVoteController()
 {
-	pEntity = FindEntityByClassname("vote_controller");
+	CBaseEntity* pVoteController = UTIL_FindEntityByClassname("vote_controller");
 	
-	if (pEntity == nullptr) {
-		g_pSM->LogError(myself, "Couldn't find the vote_controller");
-		rootconsole->ConsolePrint("Couldn't find the vote_controller");
+	if (pVoteController == NULL) {
+		UTIL_ShowError("InitVoteController(). Couldn't find the vote_controller!");
+		return;
 	}
-}
-
-void CVoteController::ResetVoteController()
-{
-	pEntity = nullptr;
+	
+	edict_t *pEdictVoteController = gameents->BaseEntityToEdict(pVoteController);
+	
+	gamehelpers->SetHandleEntity(s_hVoteController, pEdictVoteController);
 }
 
 bool CVoteController::Game_IsVoteInProgress()
 {
-	if (pEntity == nullptr) {
-		g_pSM->LogError(myself, "Native Game_IsVoteInProgress(). Couldn't find the vote_controller");
-		rootconsole->ConsolePrint("Native Game_IsVoteInProgress(). Couldn't find the vote_controller");
+	edict_t *pEdictVoteController = gamehelpers->GetHandleEntity(s_hVoteController);
+	if (pEdictVoteController == NULL) {
+		UTIL_ShowError("Native Game_IsVoteInProgress(). Couldn't find the vote_controller!");
 		return false;
 	}
 	
-	int m_activeIssueIndex = (*(int *)((byte *)pEntity + CVoteController::offset_m_activeIssueIndex));
+	CBaseEntity* pVoteController = gameents->EdictToBaseEntity(pEdictVoteController);
+	
+	if (pVoteController == NULL) {
+		UTIL_ShowError("Native Game_IsVoteInProgress(). Couldn't find the vote_controller, or this object was destroyed!");
+		return false;
+	}
+
+	int m_activeIssueIndex = (*(int *)((byte *)pVoteController + offset_m_activeIssueIndex));
+	
 	return (m_activeIssueIndex > INVALID_ISSUE);
 }

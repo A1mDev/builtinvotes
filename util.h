@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Builtin Votes
- * Copyright (C) 2011 Ross Bemrose (Powerlord).  All rights reserved.
+ * Copyright (C) 2021 A1m` (A1mDev).  All rights reserved.
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -32,6 +32,8 @@
 #ifndef _INCLUDE_BUILTINVOTES_TOOLS_UTIL_H_
 #define _INCLUDE_BUILTINVOTES_TOOLS_UTIL_H_
 
-CBaseEntity *FindEntityByClassname(const char *classname);
+CBaseEntity* UTIL_FindEntityByClassname(const char *classname);
+
+void UTIL_ShowError(const char *fmt, ...);
 
 #endif //_INCLUDE_BUILTINVOTES_TOOLS_UTIL_H_

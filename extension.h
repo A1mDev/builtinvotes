@@ -39,7 +39,6 @@
 
 #include "smsdk_ext.h"
 #include <itoolentity.h>
-#include <IGameHelpers.h>
 #include <IBuiltinVoteManager.h>
 #include <BuiltinVoteHandler.h>
 #include "igameevents.h"
@@ -138,12 +137,6 @@ public:
 	 * @param clientMax		Maximum number of clients allowed in the server.
 	 */
 	virtual void OnCoreMapStart(edict_t *pEdictList, int edictCount, int clientMax);
-	
-	/**
-	 * @brief Called on level shutdown
-	 *
-	 */
-	virtual void OnCoreMapEnd();
 #endif
 
 public:  // IConCommandBaseAccessor
@@ -183,7 +176,6 @@ private:
 	HandleType_t m_StyleType;
 	HandleType_t m_VoteType;
 	IBuiltinVoteStyle *m_VoteStyle;
-
 };
 
 extern BuiltinVoteManager g_BuiltinVotes;

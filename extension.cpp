@@ -120,6 +120,12 @@ bool BuiltinVoteManager::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_VoteHelpers.OnLoad();
 
 	sharesys->RegisterLibrary(myself, "builtinvotes");
+	
+	if (late) {
+		//Find a vote_controller
+		CVoteController::InitVoteController();
+	}
+	
 	return true;
 }
 
@@ -148,14 +154,8 @@ void BuiltinVoteManager::OnCoreMapStart(edict_t *pEdictList, int edictCount, int
 	// Tell the vote handler we're changing levels
 	s_VoteHandler.OnMapStart();
 	
-	//find the created vote_controller
+	//Find the created vote_controller
 	CVoteController::InitVoteController();
-}
-
-void BuiltinVoteManager::OnCoreMapEnd()
-{
-	//I don't know at what point this class will be destroyed (vote_controller), let's do so
-	CVoteController::ResetVoteController();
 }
 
 void BuiltinVoteManager::OnHandleDestroy(HandleType_t type, void *object)

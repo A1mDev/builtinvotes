@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Builtin Votes
- * Copyright (C) 2011 Ross Bemrose (Powerlord).  All rights reserved.
+ * Copyright (C) 2021 A1m` (A1mDev).  All rights reserved.
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -32,8 +32,6 @@
 #ifndef _INCLUDE_BUILTINVOTES_CVOTECONTROLLER_H_
 #define _INCLUDE_BUILTINVOTES_CVOTECONTROLLER_H_
 
-#define INVALID_ISSUE			-1
-
 class CVoteController
 {
 public:
@@ -41,12 +39,10 @@ public:
 	
 	static void InitVoteController();
 	
-	static void ResetVoteController();
-	
 	static bool Game_IsVoteInProgress();
 	
 private:
-	static CBaseEntity* pEntity;
+	static CBaseHandle s_hVoteController;
 	
 	static int offset_m_activeIssueIndex;
 };

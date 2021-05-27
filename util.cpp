@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Builtin Votes
- * Copyright (C) 2011 Ross Bemrose (Powerlord).  All rights reserved.
+ * Copyright (C) 2021 A1m` (A1mDev).  All rights reserved.
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -32,7 +32,7 @@
 #include "extension.h"
 #include "util.h"
 
-CBaseEntity *FindEntityByClassname(const char *classname)
+CBaseEntity* UTIL_FindEntityByClassname(const char *classname)
 {
 	CBaseEntity *pEntity = (CBaseEntity *)servertools->FirstEntity();
 	
@@ -40,8 +40,20 @@ CBaseEntity *FindEntityByClassname(const char *classname)
 		if (strcmp(gamehelpers->GetEntityClassname(pEntity), classname) == 0) {
 			return pEntity;
 		}
+		
 		pEntity = (CBaseEntity *)servertools->NextEntity(pEntity);
 	}
 
-	return nullptr;
+	return NULL;
+}
+
+void UTIL_ShowError(const char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	
+	g_pSM->LogError(myself, fmt, ap);
+	rootconsole->ConsolePrint(fmt, ap);
+	
+	va_end(ap);
 }
