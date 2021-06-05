@@ -284,9 +284,9 @@ void CL4D2BuiltinVote::DisplayVoteFail(int client, BuiltinVoteFailReason reason)
 
 void CL4D2BuiltinVote::InternalDisplayVoteFail(int clients[], unsigned int num_clients, BuiltinVoteFailReason reason)
 {
-	SH_REMOVE_HOOK(IServerGameClients, ClientCommand, servergameclients, SH_MEMBER(this, &CL4D2BuiltinVote::OnClientCommand), false);
-
 	m_bResultDisplayed = true;
+	
+	SH_REMOVE_HOOK(IServerGameClients, ClientCommand, servergameclients, SH_MEMBER(this, &CL4D2BuiltinVote::OnClientCommand), false);
 
 	int msgId = usermsgs->GetMessageIndex("VoteFail");
 

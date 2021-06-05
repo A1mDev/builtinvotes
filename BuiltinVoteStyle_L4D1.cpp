@@ -149,7 +149,9 @@ bool CL4D1BuiltinVote::Display(int clients[], unsigned int num_clients)
 	startEvent->SetString("param1", GetArgument());
 
 	events->FireEvent(startEvent);
-
+	
+	m_bResultDisplayed = false;
+	
 	SH_ADD_HOOK(IServerGameClients, ClientCommand, servergameclients, SH_MEMBER(this, &CL4D1BuiltinVote::OnClientCommand), false);
 
 	return true;
@@ -212,6 +214,8 @@ void CL4D1BuiltinVote::DisplayVotePass(const char *winner)
 
 void CL4D1BuiltinVote::DisplayVotePass(const char *translation, const char* winner)
 {
+	m_bResultDisplayed = true;
+	
 	SH_REMOVE_HOOK(IServerGameClients, ClientCommand, servergameclients, SH_MEMBER(this, &CL4D1BuiltinVote::OnClientCommand), false);
 
 	VoteEnded();
@@ -225,6 +229,8 @@ void CL4D1BuiltinVote::DisplayVotePass(const char *translation, const char* winn
 
 void CL4D1BuiltinVote::DisplayVoteFail(BuiltinVoteFailReason reason)
 {
+	m_bResultDisplayed = true;
+	
 	SH_REMOVE_HOOK(IServerGameClients, ClientCommand, servergameclients, SH_MEMBER(this, &CL4D1BuiltinVote::OnClientCommand), false);
 
 	VoteEnded();
