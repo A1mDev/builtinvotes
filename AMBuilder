@@ -1,0 +1,53 @@
+# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
+import os.path
+
+projectName = 'builtinvotes'
+
+project = Extension.HL2Project(builder, projectName + '.ext')
+project.sources += [
+  'extension.cpp',
+  'BuiltinVoteHandler.cpp',
+  'BuiltinVoteStyle_Base.cpp',
+  'natives.cpp',
+  'sm_memtable.cpp',
+  'util.cpp',
+  'CVoteController.cpp',
+  os.path.join(Extension.sm_root, 'public', 'smsdk_ext.cpp'),
+]
+
+# sm1.10+
+libudis_folder = os.path.join(Extension.sm_root, 'public', 'libudis86')
+if os.path.isdir(libudis_folder):
+  project.sources += [
+    os.path.join(libudis_folder, 'decode.c'),
+    os.path.join(libudis_folder, 'itab.c'),
+    os.path.join(libudis_folder, 'syn-att.c'),
+    os.path.join(libudis_folder, 'syn-intel.c'),
+    os.path.join(libudis_folder, 'syn.c'),
+    os.path.join(libudis_folder, 'udis86.c'),
+  ]
+
+for sdk_name in Extension.sdks:
+  sdk = Extension.sdks[sdk_name]
+  binary = Extension.HL2Config(project, projectName + '.ext.' + sdk.ext, sdk)
+  
+  if (sdk_name == "l4d"):
+    binary.sources += [
+      'BuiltinVoteStyle_L4D_Base.cpp',
+      'BuiltinVoteStyle_L4D1.cpp',
+    ]
+  elif (sdk_name == "l4d2"):
+    binary.sources += [
+      'BuiltinVoteStyle_L4D_Base.cpp',
+      'BuiltinVoteStyle_L4D2.cpp',
+    ]
+  elif (sdk_name == "csgo"):
+    binary.sources += [
+      'BuiltinVoteStyle_TF2.cpp',
+    ]
+  elif (sdk_name == "tf2"):
+    binary.sources += [
+      'BuiltinVoteStyle_TF2.cpp',
+    ]
+
+Extension.extensions = builder.Add(project)
