@@ -172,6 +172,33 @@ enum BuiltinVoteFailReason
 	BuiltinVoteFail_NotEnoughVotes = 4,	/**< Vote did not receive enough votes. */
 }
 
+enum eVoteType 
+{
+	eVoteNone = -1,
+	eBuiltinVote = 0,
+	eGameVote = 1
+};
+
+/**
+ * Returns the type of vote currently in progress
+ *
+ * @return eVoteType        eVoteNone (-1) - if the vote is not in progress now,
+ *							eBuiltinVote (0) - if 'builtinvote' voting is in progress,
+ *							eGameVote (1) - if in-game voting is in progress.
+ */
+stock eVoteType GetVoteType_InProgress()
+{
+	if (BuiltinVote_IsVoteInProgress()) {
+		return eBuiltinVote;
+	}
+	
+	if (Game_IsVoteInProgress()) {
+		return eGameVote;
+	}
+	
+	return eVoteNone;
+}
+
 /**
  * Called when a vote action is completed.
  * Based on MenuHandler
